@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <../lib/TinyLiquidCrystal_I2C/TinyLCI2C.h>
+
 #include "webServerHandler.h"
 
 // Wiring diagram for increasing the EGT sensor voltage output by 100 mV:
@@ -8,20 +10,25 @@
 // https://www.omega.com/en-us/resources/k-type-thermocouples
 
 // SETTINGS:
-constexpr int EGT_SENSOR_PIN = 36;                // ADC1 CH0
-constexpr int VOLTAGE_INCREASE = 100;             // mV
-constexpr int V_MAX = 950;                        // mV
-constexpr int ADC_WIDTH = 12;                     // bits
-constexpr int ADC_RESOLUTION = 4095;              // 12 bits
-constexpr adc_attenuation_t ADC_DB = ADC_0db;     // 100 mV -> 950 mV
+constexpr int EGT_SENSOR_PIN       = 36;      // ADC1 CH0
+constexpr int VOLTAGE_INCREASE     = 100;     // mV
+constexpr int V_MAX                = 950;     // mV
+constexpr int ADC_WIDTH            = 12;      // bits
+constexpr int ADC_RESOLUTION       = 4095;    // 12 bits
+constexpr adc_attenuation_t ADC_DB = ADC_0db; // 100 mV -> 950 mV
 
 constexpr float TEMP_VOLTAGE_MULTIPLIER = 4.096f; // 4.096 mV in 100 °C
+
+constexpr int LCD_ADDRESS    = 0x27; // 0x20?
+constexpr int LCD_CHARACTERS = 16;
+constexpr int LCD_LINES      = 2;
 
 const char* SSID = "SSID";
 const char* PASSWORD = "PASSWORD";
 
 
 std::unique_ptr<WebServerHandler> serverHandler = nullptr;
+std::unique_ptr<TinyLCI2C> lcd = nullptr;
 
 static float getEgtVoltage()
 {
@@ -40,6 +47,10 @@ void setup()
     analogSetAttenuation(ADC_DB);
 
     serverHandler = WebServerHandler::gen(SSID, PASSWORD);
+
+    lcd = make_unique<TinyLCI2C>(LCD_ADDRESS, LCD_LINES);
+    lcd->print("Initializing");
+
     delay(1000);
 }
 
@@ -58,5 +69,15 @@ void loop()
     if (serverHandler->isConnected())
         serverHandler->pushData(data);
 
+    // TODO: Temporary solution, this should be change when the button is pressed
+    data = "V1: " + std::to_string(egtVoltage);
+    lcd->print(data.c_str());
     delay(500);
+
+    data = "V2: " + std::to_string(egtVoltage2);
+    lcd->print(data.c_str());
+    delay(500);
+
+    data = "Temp " + std::to_string(egtTemp) + " C";
+    lcd->print(data.c_str());
 }
