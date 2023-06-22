@@ -1,0 +1,6 @@
+.pio
+.idea
+cmake-build-debug
+cmake-build-esp32dev
+CMakeListsPrivate.txt
+cmake-build-*/ 
