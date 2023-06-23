@@ -30,4 +30,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} include/webServerHandler.h src/webServerHandler.cpp include/bootlegUniquePtr.h lib/LiquidCrystal_I2C/LiquidCrystal_I2C.h lib/LiquidCrystal_I2C/LiquidCrystal_I2C.cpp lib/TinyLiquidCrystal_I2C/TinyLCI2C.cpp lib/TinyLiquidCrystal_I2C/TinyLCI2C.h)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST} include/webServerHandler.h src/webServerHandler.cpp include/bootlegUniquePtr.h lib/TinyLiquidCrystal_I2C/TinyLCI2C.cpp lib/TinyLiquidCrystal_I2C/TinyLCI2C.h include/settings.h)
