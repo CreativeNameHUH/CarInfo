@@ -6,8 +6,6 @@
 
 #include <cstdio>
 
-#define LCD_BACKLIGHT
-
 class TinyLCI2C
 {
 public:
@@ -27,10 +25,10 @@ private:
     static constexpr uint8_t LCD_DISPLAYCONTROL = 0x08;
     static constexpr uint8_t LCD_ENTRYLEFT      = 0x02;
     static constexpr uint8_t LCD_ENTRYMODESET   = 0x04;
-#ifdef LCD_BACKLIGHT
-    static constexpr uint8_t LCD_BACKLIGHTVAL   = 0x08;
-#else
+#ifdef LCD_NOBACKLIGHT
     static constexpr uint8_t LCD_BACKLIGHTVAL   = 0x00;
+#else
+    static constexpr uint8_t LCD_BACKLIGHTVAL   = 0x08;
 #endif
 
     uint8_t mLcdAddress;
