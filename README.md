@@ -1,7 +1,13 @@
 # CarInfo
-Used for reading data from a mystery cable found in my car that turned out to be an EGT sensor :D
-It creates a web server for displaying EGT and EGT sensor voltage. I might add more stuff in the future.
+### **ESP32-S2** EGT sensor reader.
+Currently, supports a simple website and an OLED display on Wemos S2 Pico for displaying EGT and EGT sensor voltage.
 
+### ESP32 Support:
+It is possible to use it with the regular ESP32 but an addition hardware is needed to increase the voltage of the sensor which is usually bellow 100 mV.
+To enable it ESP32_DEPRECATED has to be defined.
+> #define ESP32_DEPRECATED
+
+**Any further changes can break ESP32 support!** 
 ## Usefull stuff:
-### [Wiring diagram](https://esp32.com/download/file.php?id=1205&sid=b2a025eb132bba33aadf4628eb28b5c8) for increasing the voltage by 100 mV due to ESP32 ADC limitation
 ### Typical [voltage output](https://www.omega.com/en-us/resources/k-type-thermocouples) for the K type Thermocouple
+ 

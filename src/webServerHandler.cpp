@@ -15,7 +15,7 @@ std::unique_ptr<WebServerHandler> WebServerHandler::gen(const char* ssid, const 
 WebServerHandler::WebServerHandler(const char* ssid, const char* password)
 {
     WiFi.begin(ssid, password);
-    for (int timeout = 0; WiFi.status() != WL_CONNECTED; timeout++)
+    for (int timeout = 0; WiFiClass::status() != WL_CONNECTED; timeout++)
     {
         if (timeout == 50)
             return;
@@ -50,7 +50,9 @@ bool WebServerHandler::isConnected()
 
 void WebServerHandler::pushData(const std::string& data)
 {
-    webpage = "<!DOCTYPE html><html>\n"
+    server->handleClient();
+
+    webpage = "<!DOCTYPE html><html><meta http-equiv=\"refresh\" content=\"1\">"
               "<body>";
     webpage += data + "</body></html>";
 }
